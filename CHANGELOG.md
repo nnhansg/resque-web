@@ -1,8 +1,14 @@
 # Changelog
 
-# 0.0.15
+## 0.0.16
+
+* Fix bugs.
+
+## 0.0.15
+
 * Add CHANGELOG file.
 * Update version.
 
-# 0.0.14
+## 0.0.14
+
 * Support jQuery DataTable library.
