@@ -28,6 +28,7 @@ vendor/ruby
 Vagrantfile
 .vagrant
 .idea
+.dccache
 
 # wwtd
 gemfiles/.bundle
