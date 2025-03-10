@@ -1,19 +1,21 @@
 module ResqueWeb
   module ApplicationHelper
-
     PER_PAGE = 20
 
     def tabs
-      t = {'overview' => ResqueWeb::Engine.app.url_helpers.overview_path,
-       'working'  => ResqueWeb::Engine.app.url_helpers.working_index_path,
-       'failures' => ResqueWeb::Engine.app.url_helpers.failures_path,
-       'queues' => ResqueWeb::Engine.app.url_helpers.queues_path,
-       'workers' => ResqueWeb::Engine.app.url_helpers.workers_path,
-       'stats' => ResqueWeb::Engine.app.url_helpers.stats_path
+      t = {
+        'overview' => ResqueWeb::Engine.app.url_helpers.overview_path,
+        'working' => ResqueWeb::Engine.app.url_helpers.working_index_path,
+        'failures' => ResqueWeb::Engine.app.url_helpers.failures_path,
+        'queues' => ResqueWeb::Engine.app.url_helpers.queues_path,
+        'workers' => ResqueWeb::Engine.app.url_helpers.workers_path,
+        'stats' => ResqueWeb::Engine.app.url_helpers.stats_path
       }
+
       ResqueWeb::Plugins.plugins.each do |p|
         p.tabs.each { |tab| t.merge!(tab) }
       end
+
       t
     end
 
@@ -40,30 +42,31 @@ module ResqueWeb
     end
 
     def pagination(options = {})
-      start    = options[:start] || 1
+      start = options[:start] || 1
       per_page = options[:per_page] || PER_PAGE
-      total    = options[:total] || 0
+      total = options[:total] || 0
       return if total < per_page
 
-      markup = ""
+      markup = ''
+
       if start - per_page >= 0
-        markup << link_to(raw("&laquo; less"), url_for(params.to_unsafe_h.merge(start: start - per_page)), class: 'btn less')
+        markup << link_to(raw('&laquo; less'), params.permit!.merge(start: start - per_page), class: 'btn less')
       end
 
       if start + per_page <= total
-        markup << link_to(raw("more &raquo;"), url_for(params.to_unsafe_h.merge(start: start + per_page)), class: 'btn more')
+        markup << link_to(raw('more &raquo;'), params.permit!.merge(start: start + per_page), class: 'btn more')
       end
 
-      content_tag :p, raw(markup), :class => 'pagination'
+      content_tag :p, raw(markup), class: 'pagination'
     end
 
-    def poll(polling=false)
+    def poll(polling = false)
       if polling
-        text = "Last Updated: #{Time.now.strftime("%H:%M:%S")}".html_safe
+        text = "Last Updated: #{Time.now.strftime('%H:%M:%S')}".html_safe
       else
         text = "<a href='#{h(request.path)}' rel='poll'>Live Poll</a>".html_safe
       end
-      content_tag :p, text, :class => 'poll'
+      content_tag :p, text, class: 'poll'
     end
   end
 end
