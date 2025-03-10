@@ -50,11 +50,15 @@ module ResqueWeb
       markup = ''
 
       if start - per_page >= 0
-        markup << link_to(raw('&laquo; less'), params.permit!.merge(start: start - per_page), class: 'btn less')
+        new_params = request.query_parameters.merge(start: start - per_page)
+        new_path = "#{request.path}?#{new_params.to_query}"
+        markup << link_to(raw('&laquo; less'), new_path, class: 'btn less')
       end
 
       if start + per_page <= total
-        markup << link_to(raw('more &raquo;'), params.permit!.merge(start: start + per_page), class: 'btn more')
+        new_params = request.query_parameters.merge(start: start + per_page)
+        new_path = "#{request.path}?#{new_params.to_query}"
+        markup << link_to(raw('more &raquo;'), new_path, class: 'btn more')
       end
 
       content_tag :p, raw(markup), class: 'pagination'

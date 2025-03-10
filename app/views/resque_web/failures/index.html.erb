@@ -28,5 +28,5 @@
     <% end %>
   </ul>
 
-  <%= pagination(path: failures_path, start: failure_start_at, total: failure_size) unless params[:class] %>
+  <%= pagination(start: failure_start_at, total: failure_size) unless params[:class] %>
 <% end %>

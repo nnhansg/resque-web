@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.19
+
+* Fix bugs on production.
+
 ## 0.0.18
 
 * Fix bugs.
